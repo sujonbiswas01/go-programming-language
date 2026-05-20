@@ -38,7 +38,19 @@ func main() {
 		age:        20,
 		isLoggedIn: false,
 	}
+	// user2 := user{
+	// 	name:       "rajon",
+	// 	age:        15,
+	// 	isLoggedIn: false,
+	// }
 	user1.greet()
+	user1.login()
+	fmt.Printf("%+v", user1)
+}
+
+func (u user) login() {
+	fmt.Println("login called")
+	u.isLoggedIn = true
 }
 
 func (u user) greet() {
