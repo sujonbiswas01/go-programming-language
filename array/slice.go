@@ -10,7 +10,6 @@ func slice() {
 	slice1 = append(slice1, 400)
 	slice1 = append(slice1, 500)
 	slice1 = append(slice1, 600)
-
 	fmt.Println(slice1)
 	slice1[0] = 100
 	fmt.Println(slice1)
