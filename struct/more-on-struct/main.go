@@ -48,12 +48,11 @@ func main() {
 	fmt.Printf("%+v", user1)
 }
 
-func (u user) login() {
-	fmt.Println("login called")
-	u.isLoggedIn = true
+func (u *user) login() {
+	fmt.Println(`login called`)
+	(*u).isLoggedIn = true
 }
 
 func (u user) greet() {
 	fmt.Println("hello", u.name)
-
 }
