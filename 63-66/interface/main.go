@@ -25,7 +25,9 @@ type Payment interface {
 	Pay()
 }
 
-type Bkash struct{}
+type Bkash struct {
+	apikey string
+}
 
 func (b Bkash) Pay() {
 	fmt.Println("Paid with Bkash")
@@ -33,12 +35,16 @@ func (b Bkash) Pay() {
 func CompletePayment(p Payment) {
 	p.Pay()
 }
+
+type PaymentService struct {
+}
+
 func main() {
 	// fmt.Println("interface")
 	// dexter := Animal{}
 	// makeSound(dexter)
 	// fmt.Println(dexter, "dexer")
 
-	b := Bkash{}
-	CompletePayment(b)
+	// b := Bkash{}
+	// CompletePayment(b)
 }
