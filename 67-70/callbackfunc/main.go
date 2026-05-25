@@ -20,4 +20,10 @@ func main() {
 	}
 	fmt.Println(calculate(10, 90, add))
 
+	// anonymous callback function
+
+	fmt.Println(calculate(7, 5, func(x, y int) int {
+		return x - y
+	}))
+
 }
