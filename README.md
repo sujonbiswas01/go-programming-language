@@ -15,4 +15,9 @@
 
   Format Specifiers in Golang
 
+  go with postgresql
+  https://github.com/jackc/pgx
+
+  cmd : go get "github.com/jackc/pgx/v5"
+
  ```
