@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 type Users struct {
@@ -33,7 +34,8 @@ func main() {
 	mux.HandleFunc("GET /", rootHandler)
 	mux.HandleFunc("GET /health", healHandler)
 	mux.HandleFunc("POST /createuser", CreateUserHandler)
-	mux.HandleFunc("GET /users", GetuersHandeller)
+	mux.HandleFunc("GET /users/{id}", GetuersHandeller)
+	mux.HandleFunc("GET /user/{id}", GetSingleuersHandeller)
 
 	fmt.Println("server is running at http://localhost:5000")
 	err := http.ListenAndServe(":5000", mux)
@@ -87,4 +89,34 @@ func GetuersHandeller(w http.ResponseWriter, r *http.Request) {
 
 	encoder := json.NewEncoder(w)
 	encoder.Encode(users)
+}
+
+func GetSingleuersHandeller(w http.ResponseWriter, r *http.Request) {
+	idparams := r.PathValue("id")
+	// fmt.Println(idparams)
+	// fmt.Fprintln(w, idparams)
+
+	// fmt.Printf("the value or id is %v and the type of the id is %T", idparams, idparams)
+
+	// for _,user := range users{
+	// 	if user.id== {
+
+	// 	}
+	// }
+
+	id, err := strconv.Atoi(idparams)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+
+	for _, user := range users {
+		if user.id == id {
+			json.NewEncoder(w).Encode(user)
+		}
+	}
+
+	w.WriteHeader(http.StatusNotFound)
+	fmt.Fprintln(w, `not found by id`, id)
+
 }
