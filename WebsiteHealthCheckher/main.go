@@ -4,4 +4,5 @@ import "fmt"
 
 func main() {
 	fmt.Println("sujon")
+	fmt.Print("sldkfjsdf")
 }
