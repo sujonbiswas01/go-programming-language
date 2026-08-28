@@ -1,9 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
 
 func main() {
-	fmt.Println("sujon")
-	fmt.Println("sdf")
+	urls := []string{
+		"https://google.com",
+		"https://github.coms",
+	}
 
+	start := time.Now()
+
+	for _, url := range urls {
+		res, err := http.Get(url)
+		if err != nil {
+			fmt.Println(url, "is down")
+		} else {
+			fmt.Println(url, "is Up")
+			res.Body.Close()
+		}
+	}
+
+	fmt.Println("time taken", time.Since(start))
+	fmt.Println("All url checked Successfully")
 }

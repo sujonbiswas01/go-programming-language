@@ -23,7 +23,10 @@ func main() {
 	// 	fmt.Println(value, i)
 	// }
 
-	// name := "next level"
-	// var byteSlice = []byte(name)
-	// fmt.Println(byteSlice)
+	name := "next level"
+	var byteSlice = []byte(name) //কে byte slice-এ convert করা হচ্ছে।
+	fmt.Println(byteSlice)
+
+	// Go-তে range ব্যবহার করা হয় কোনো array, slice, string, map, channel ইত্যাদির ভেতরের data একে একে নেওয়ার জন্য।
+	// range = collection-এর প্রতিটি item একে একে বের করে আনা।
 }

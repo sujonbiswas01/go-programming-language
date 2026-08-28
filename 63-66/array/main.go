@@ -12,5 +12,6 @@ func main() {
 	// for i := 0; i < len(numbers); i++ {
 	// 	fmt.Println(numbers[i])
 	// }
-	slice()
+	Slice()
+
 }

@@ -13,6 +13,8 @@ func (d Cat) speek() {
 	fmt.Println("Cat")
 }
 
+// Function-কে নির্দিষ্ট Dog, Cat, Bkash না দিয়ে interface দিলে ভবিষ্যতে একই interface follow করা নতুন type সহজেই ব্যবহার করা যায়।
+
 type Animal interface {
 	speek()
 }
@@ -47,4 +49,5 @@ func main() {
 
 	// b := Bkash{}
 	// CompletePayment(b)
+	Own()
 }

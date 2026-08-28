@@ -25,12 +25,20 @@ func main() {
 	// delete(myMap, "name")
 	// fmt.Println(myMap)
 
+	// একটা Map বানালাম → "data" নামে একটা key রাখলাম → সেই key-এর ভিতরে একজন user-এর সম্পূর্ণ information রাখলাম।
+	// এই Map-এর key হবে string এবং value হবে user struct।
+
 	myMap := map[string]user{
 		"data": {
 			name:  "sujon",
 			email: "sujon@gmail.com",
 			age:   21,
 		},
+		"d": {
+			name:  "rajon",
+			email: "rajon@gmail.com",
+			age:   17,
+		},
 	}
-	fmt.Printf("%+v", myMap["data"])
+	fmt.Printf("%+v", myMap["data"], myMap["d"])
 }
