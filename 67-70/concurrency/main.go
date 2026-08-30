@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+// একাধিক কাজকে এমনভাবে manage করা, যাতে কাজগুলো একই সময়ে এগোতে পারে।
+// Concurrent = একই সময়ে একাধিক কাজের progress হওয়া।
+
 var wg sync.WaitGroup
 var uploadUrl string
 
@@ -13,7 +16,7 @@ func main() {
 	var start = time.Now()
 	// wg.Add(1)
 	// go uploadFile()
-	uploadFile()
+	// uploadFile()
 	wg.Go(uploadFile)
 	// wg.Add(1)
 	// go savetoDb()

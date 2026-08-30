@@ -1,6 +1,7 @@
 package main
 
-import "fmt"
+// Enum (Enumeration) হলো আগে থেকে নির্দিষ্ট করে রাখা কিছু value-এর তালিকা।
+// Go-তে আলাদা enum keyword নেই। সাধারণত const + custom type দিয়ে Enum-এর মতো তৈরি করা হয়।
 
 type weekday int
 
@@ -35,8 +36,9 @@ const (
 )
 
 func main() {
-	fmt.Println(getworkdayStatus(Monday))
-	fmt.Println(getworkdayStatus(FriDay))
-	fmt.Println(statusHalfDay)
+	// fmt.Println(getworkdayStatus(Monday))
+	// fmt.Println(getworkdayStatus(FriDay))
+	// fmt.Println(statusHalfDay)
+	CustomEnums()
 
 }

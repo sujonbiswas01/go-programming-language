@@ -25,3 +25,12 @@ func uploadFile(c chan string) {
 	fileUrl := "https://images.pexels.com/photos/35758340/pexels-photo-35758340.jpeg"
 	c <- fileUrl
 }
+
+//Channel হলো Go-তে এক Goroutine থেকে আরেক Goroutine-এর কাছে data পাঠানোর একটি মাধ্যম।
+// ২. Channel তৈরি করা
+// ch := make(chan int)
+// ch হলো এমন একটা channel যেটাতে int type-এর data পাঠানো যাবে।
+// Chan <- 10nel-এ data পাঠানো
+// ch
+// Channel থেকে data নেওয়া
+// value := <-ch

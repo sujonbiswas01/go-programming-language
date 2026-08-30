@@ -1,10 +1,5 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type Person struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
@@ -13,18 +8,20 @@ type Person struct {
 
 func main() {
 
-	p := Person{
-		Name: "sujon",
-		Age:  20,
-		City: "sylhet",
-	}
+	// p := Person{
+	// 	Name: "sujon",
+	// 	Age:  20,
+	// 	City: "sylhet",
+	// }
 
-	rawjson, err := json.Marshal(p)
+	// rawjson, err := json.Marshal(p)
 
-	if err != nil {
-		fmt.Println("error:", err)
-		return
-	}
-	fmt.Println(string(rawjson))
+	// if err != nil {
+	// 	fmt.Println("error:", err)
+	// 	return
+	// }
+	// fmt.Println(string(rawjson))
+
+	CustomJson()
 
 }

@@ -11,6 +11,7 @@ type Persons struct {
 }
 
 func CustomJson() {
+	var dsd Persons
 
 	per := Persons{
 		Name:  "sujon biswas",
@@ -21,6 +22,9 @@ func CustomJson() {
 	if err != nil {
 		fmt.Println("some went wrond", err)
 	}
-	fmt.Println(data)
+
+	json.Unmarshal([]byte(data), &dsd)
+
+	fmt.Println("data", dsd)
 
 }
