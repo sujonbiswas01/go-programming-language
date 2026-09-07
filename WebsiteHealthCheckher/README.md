@@ -76,5 +76,52 @@ FormatBool() → bool → string
 ```
 
 
-1 : postgres://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME?sslmode=disable
-2 : https://github.com/jackc/pgx
+# Go + PostgreSQL Resources
+
+## 1. PostgreSQL Connection String
+
+```text
+postgres://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME?sslmode=disable
+```
+
+**কাজ:** Go application-কে PostgreSQL database-এর সাথে connect করে।
+
+---
+
+## 2. pgx
+
+https://github.com/jackc/pgx
+
+**কাজ:** Go থেকে PostgreSQL database-এর সাথে connect এবং query করার জন্য ব্যবহার করা হয়।
+
+```bash
+go get github.com/jackc/pgx/v5
+```
+
+---
+
+## 3. godotenv
+
+https://github.com/joho/godotenv
+
+**কাজ:** `.env` file থেকে secret এবং environment variable load করার জন্য ব্যবহার করা হয়।
+
+```bash
+go get github.com/joho/godotenv
+```
+
+---
+
+## Flow
+
+```text
+.env
+  ↓
+godotenv
+  ↓
+DATABASE_URL
+  ↓
+pgx
+  ↓
+PostgreSQL
+```
