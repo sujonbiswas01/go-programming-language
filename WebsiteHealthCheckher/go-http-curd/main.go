@@ -200,22 +200,37 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Datas-এর মধ্যে User খোঁজা
-	for index, user := range Datas {
+	// for index, user := range Datas {
 
-		if user.ID == id {
+	// 	if user.ID == id {
 
-			// ওই User-কে Slice থেকে remove করা
-			Datas = append(
-				Datas[:index],
-				Datas[index+1:]...,
-			)
+	// 		// ওই User-কে Slice থেকে remove করা
+	// 		Datas = append(
+	// 			Datas[:index],
+	// 			Datas[index+1:]...,
+	// 		)
 
-			w.WriteHeader(http.StatusOK)
-			fmt.Fprintln(w, "User deleted successfully")
+	// 		w.WriteHeader(http.StatusOK)
+	// 		fmt.Fprintln(w, "User deleted successfully")
 
-			return
-		}
+	// 		return
+	// 	}
+	// }query :=
+
+	query := `delete from users where id =$1`
+	cmdTag, err := db.Exec(context.Background(), query, id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintln(w, `Could not delete user`)
+		return
+	}
+	if cmdTag.RowsAffected() == 0 {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintln(w, "user not found")
+		return
 	}
 	// User পাওয়া না গেলে
-	http.Error(w, "User not found", http.StatusNotFound)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintln(w, "User deleted successfully")
+	// http.Error(w, "User not found", http.StatusNotFound)
 }
