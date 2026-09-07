@@ -10,6 +10,7 @@ import (
 	"strconv"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/joho/godotenv"
 )
 
 type User struct {
@@ -43,7 +44,7 @@ var db *pgx.Conn
 
 func connectDb() {
 	var err error
-	urlExample := "postgres://postgres:sujon123@localhost:5432/postgres"
+	urlExample := os.Getenv("DB_STRING")
 	db, err = pgx.Connect(context.Background(), urlExample)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -55,6 +56,12 @@ func connectDb() {
 }
 
 func main() {
+	var err error
+	err = godotenv.Load()
+	if err != nil {
+		panic("Error loading .env file")
+	}
+
 	connectDb()
 	defer db.Close(context.Background())
 	mux := http.NewServeMux()
