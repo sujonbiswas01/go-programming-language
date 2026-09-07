@@ -27,6 +27,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	newUser.ID = len(Datas) + 1
 	users := append(Datas, newUser)
+	fmt.Println(users)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(newUser)
