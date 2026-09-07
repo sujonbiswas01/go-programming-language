@@ -1,11 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
+
+	"github.com/jackc/pgx/v5"
 )
 
 type User struct {
@@ -35,8 +39,24 @@ var Datas = []User{
 		Email: "madob@example.com",
 	},
 }
+var db *pgx.Conn
+
+func connectDb() {
+	var err error
+	urlExample := "postgres://postgres:sujon123@localhost:5432/postgres"
+	db, err = pgx.Connect(context.Background(), urlExample)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println(db)
+	fmt.Println("database connection successfully")
+
+}
 
 func main() {
+	connectDb()
+	defer db.Close(context.Background())
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", rootHandler)
 	mux.HandleFunc("/health", healthHandler)
@@ -75,8 +95,32 @@ func GgetUserhandler(w http.ResponseWriter, r *http.Request) {
 	// userss, _ := json.Marshal(datas)
 	// w.Write(userss)
 
-	encoder := json.NewEncoder(w)
-	encoder.Encode(Datas)
+	// encoder := json.NewEncoder(w)
+	// encoder.Encode(Datas)
+
+	rows, err := db.Query(context.Background(), "SELECT * FROM users")
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, "Failed to get users", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	// Database-এর users রাখার জন্য Slice
+	var users []User
+	for rows.Next() {
+		var user User
+		err := rows.Scan(&user.ID, &user.Name, &user.Age, &user.Email)
+		if err != nil {
+			http.Error(w, "Failed to read user data", http.StatusInternalServerError)
+			return
+		}
+		// User-কে users slice-এ যোগ করা
+		users = append(users, user)
+		// Response JSON format করা
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(users)
+	}
 }
 
 func GetSingleuserHandler(w http.ResponseWriter, r *http.Request) {
@@ -172,7 +216,6 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 	// User পাওয়া না গেলে
 	http.Error(w, "User not found", http.StatusNotFound)
 }
