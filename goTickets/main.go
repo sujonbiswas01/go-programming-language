@@ -11,8 +11,9 @@ import (
 )
 
 type User struct {
-	Name     string `json:"name" validate:"required"`
-	Email    string `json:"email" validate:"required,email"`
+	gorm.Model
+	Name     string `json:"name" validate:"required"  gorm:"type:varchar(100);not null"`
+	Email    string `json:"email" validate:"required,email" gorm:"type:varchar(100);unique;not null"`
 	Password string `json:"password" validate:"required"`
 }
 
@@ -29,8 +30,14 @@ func (cv *CustomValidator) Validate(i any) error {
 }
 
 func main() {
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	dsn := "host=localhost user=postgres password=sujon123 dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{TranslateError: true})
+	db.AutoMigrate(&User{})
+	if err != nil {
+		panic("failed to connect database")
+	} else {
+		println("database connection successfully")
+	}
 
 	e := echo.New()
 	e.Use(middleware.RequestLogger())
@@ -43,6 +50,10 @@ func main() {
 		}
 		if err := c.Validate(u); err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": err.Error()})
+		}
+		result := db.Create(&u)
+		if result.Error != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": result.Error.Error()})
 		}
 		return c.JSON(http.StatusCreated, u)
 	})
